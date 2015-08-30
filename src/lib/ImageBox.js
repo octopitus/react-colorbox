@@ -30,7 +30,7 @@ export default class ImageBox extends ReactCSS.Component {
 	}
 
 	render() {
-		if (this.state.onLoading) {
+		if (this.state.onLoading || !this.props.show) {
 			return this.beforeLoading();
 		}
 		return (
