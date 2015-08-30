@@ -1,4 +1,3 @@
-// Webpack config for development
 var webpack = require('webpack');
 var path = require('path');
 
