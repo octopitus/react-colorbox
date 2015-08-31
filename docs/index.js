@@ -1,3 +1,5 @@
+import 'babel/polyfill';
+
 import React from 'react';
 import ColorBox from 'react-colorbox';
 import Home from './components/Home';

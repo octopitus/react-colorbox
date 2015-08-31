@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clear": "rimraf dist",
-    "build-dev": "webpack -p",
+    "build-dev": "webpack --colors",
     "listen": "webpack-dev-server --hot --quiet",
     "dev": "npm run clear && concurrent --kill-others \"npm run build-dev\" \"npm run listen\"",
     "build": "babel src --out-dir build --stage 0"
