@@ -9,12 +9,12 @@ export default class CloseBtn extends React.Component {
 	styles() {
 		return {
 			position: 'absolute',
-			bottom: '5px',
+			top: '5px',
 			right: '5px',
 			cursor: 'pointer',
 			border: 'none',
 			fontSize: '16px',
-			color: '#666',
+			color: '#fff',
 			background: 'transparent!important'
 		}
 	}

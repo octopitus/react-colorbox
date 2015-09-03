@@ -1,7 +1,9 @@
 import React from 'react';
 
-import ImageBox from './ImageBox';
+import ImageBoxContainer from './ImageBoxContainer';
+
 import CloseBtn from './CloseBtn';
+import ImageBox from './ImageBox';
 
 import { store } from '../tools';
 
@@ -13,72 +15,59 @@ export default class ImageBoxGroup extends React.Component {
 	}
 
 	componentDidMount() {
+
+		let DOM = React.findDOMNode(this);
+
+		DOM.addEventListener("transitionend", (e) => this.handleTransitionEnd(e), false);
+		DOM.addEventListener("webkitTransitionEnd", (e) => this.handleTransitionEnd(e), false);
+		DOM.addEventListener("mozTransitionEnd", (e) => this.handleTransitionEnd(e), false);
+		DOM.addEventListener("msTransitionEnd", (e) => this.handleTransitionEnd(e), false);
+		DOM.addEventListener("oTransitionEnd", (e) => this.handleTransitionEnd(e), false);
+
 		store.listen(data => this.setState(data));
-		React.findDOMNode(this).addEventListener("transitionend", () => {
-			this.setState({ show: true });
-		});
+	}
+
+	handleTransitionEnd(e) {
+		this.setState({ show: true });
 	}
 
 	styles(component) {
 		let { width, height } = this.state;
 		return {
-			wrapper: {
-				WebkitTransition: 'all 0.3s linear',
-				MozTransition: 'all 0.3s linear',
-				msTransition: 'all 0.3s linear',
-				OTransition: 'all 0.3s linear',
-				transition: 'all 0.3s linear',
-				backgroundColor: '#fefefe',
-				position: 'absolute',
-				top: `calc((100% - ${height}px) / 2)`,
-				left: `calc((100% - ${width}px) / 2)`,
-				width: width,
-				height: height,
-				border: '8px solid rgba(0, 0, 0, 0.35)',
-				WebkitBorderRadius: '8px',
-				borderRadius: '8px'
-			},
-			container: {
-				position: 'relative',
-				width: '100%',
-				height: '100%'
-			}
+			WebkitTransition: 'all 0.3s linear',
+			MozTransition: 'all 0.3s linear',
+			msTransition: 'all 0.3s linear',
+			OTransition: 'all 0.3s linear',
+			transition: 'all 0.3s linear',
+			backgroundColor: '#fefefe',
+			position: 'absolute',
+			top: `calc((100% - ${height}px) / 2)`,
+			left: `calc((100% - ${width}px) / 2)`,
+			width: width,
+			height: height,
+			border: '8px solid rgba(0, 0, 0, 0.35)',
+			WebkitBorderRadius: '8px',
+			borderRadius: '8px'
 		};
-	}
-
-	setSize(size) {
-		this.setState({...size, show: false});
-	}
-
-	onClose() {
-		// Just reset the current state of component
-		// to the initial state
-		this.setState(store.getState());
 	}
 
 	render() {
 
-		let styles = this.styles();
-
-		let wrapper = {...styles['wrapper'], display: this.state.currentBox !== null ? 'block' : 'none'};
-		let container = styles['container'];
-
-		let boxes = this.props.boxes.map((box, i) => {
-			if (i !== this.state.currentBox) { return null; }
-			return <ImageBox key={i} {...box} index={i + 1} total={this.props.boxes.length} setSize={(size) => this.setSize(size)} show={this.state.show} />;
+		let currentBox = this.props.boxes.findIndex((box, i) => {
+			return i === this.state.currentBox;
 		});
 
 		return (
-			<div style={wrapper}>
-				<div style={container}>
-					<CloseBtn onClose={() => this.onClose()} />
-					{boxes}
-				</div>
+			<div style={{...this.styles(), display: this.state.currentBox !== null ? 'block' : 'none'}}>
+				<ImageBoxContainer>
+					<CloseBtn onClose={() => this.setState(store.getState())} />
+					{ currentBox !== -1 ? <ImageBox key={currentBox} {...this.props.boxes[currentBox]} show={this.state.show} onSizeChange={(size) => this.setState({...size, show: false})} /> : null }
+				</ImageBoxContainer>
 			</div>
 		);
 	}
 }
 
 ImageBoxGroup.propTypes = {
-	boxes: React.PropTypes.array
+	boxes: React.PropTypes.array.isRequired
 }
