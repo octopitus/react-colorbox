@@ -5,7 +5,6 @@
 - [ ] Slideshow
 - [ ] Ajax content
 - [ ] External content via iframe
-
 - Easy to customize.
 - Preloads upcoming image in a photo group.
 

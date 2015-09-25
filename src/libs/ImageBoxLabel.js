@@ -3,23 +3,26 @@ import React from 'react';
 export default class ImageBoxLabel extends React.Component {
 	styles() {
 		return {
-			padding: '0px 8px',
 			position: 'absolute',
 			bottom: '0px',
 			left: '0px',
-			right: '0px',
 			width: 'auto',
-			height: '32px',
-			lineHeight: '32px',
+			height: '20px',
+			padding: '6px 0',
+			lineHeight: '16px',
 			fontSize: '16px',
-			textAlign: 'center',
+			fontFamily: 'Helvetica, Arial, sans-serif',
+			textAlign: 'left',
 			color: '#fff',
-			background: 'rgba(0, 0, 0, 0.75)'
+			zIndex: '9999'
 		}
 	}
 	render() {
 		return (
-			<div style={this.styles()}>{this.props.title}</div>
+			<div style={this.styles()}>
+				{this.props.title}<br/>
+				<small style={{color: '#999'}}>Image {this.props.index} of {this.props.total}</small>
+			</div>
 		);
 	}
 }

@@ -28,7 +28,7 @@ class Dispatcher {
 	}
 
 	emit(event, ...args) {
-		if (! this.observers[event]) {
+		if (!this.observers[event]) {
 			return;
 		}
 		this.observers[event].forEach(function(observer) {

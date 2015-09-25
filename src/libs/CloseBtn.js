@@ -8,14 +8,19 @@ export default class CloseBtn extends React.Component {
 
 	styles() {
 		return {
+			zIndex: 9999,
 			position: 'absolute',
-			top: '5px',
-			right: '5px',
+			bottom: '0',
+			right: '0',
 			cursor: 'pointer',
 			border: 'none',
-			fontSize: '16px',
+			fontSize: '32px',
+			fontWeight: 'bold',
 			color: '#fff',
-			background: 'transparent!important'
+			width: '32px',
+			height: '32px',
+			background: 'rgba(0,0,0,0)',
+			lineHeight: '32px',
 		}
 	}
 

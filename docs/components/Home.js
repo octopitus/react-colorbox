@@ -1,6 +1,5 @@
 import React from 'react';
-import { ImageBoxGroup } from 'react-colorbox';
-import { actions } from 'react-colorbox/tools';
+import { ImageBoxGroup, BoxHandler } from 'react-colorbox';
 
 export default class Home extends React.Component {
 
@@ -17,10 +16,10 @@ export default class Home extends React.Component {
 
 		return (
 			<div>
-				<ImageBoxGroup boxes={boxes} />
+				<ImageBoxGroup />
 				<ul>
 					{boxes.map((box, i) => {
-						return (<li key={i}><a onClick={() => actions.selectBox(i)}>{box.title}</a></li>);
+						return (<li key={i}><BoxHandler {...box}>{box.title}</BoxHandler></li>);
 					})}
 				</ul>
 			</div>

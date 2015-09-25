@@ -1,9 +1,7 @@
 import dispatcher from './dispatcher';
-import actions from './actions';
-import store from './store';
+import handler from './handler';
 
 export default { 
 	dispatcher,
-	actions,
-	store
+	handler
 }
