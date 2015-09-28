@@ -32,7 +32,7 @@ export default class ImageBoxContainer extends React.Component {
 			});
 		});
 		return (
-			<div style={{...this.styles(), ...this.transition()}}>
+			<div style={this.styles()}>
 				<ReactTransitionGroup>{children}</ReactTransitionGroup>
 			</div>
 		);
