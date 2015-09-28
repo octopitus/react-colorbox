@@ -25,14 +25,14 @@ export default class ImageBoxContainer extends React.Component {
 	}
 	render() {
 		let children = this.props.children.map(child => {
-			if (!child) { return child;}
+			if (!child) { return child; }
 			return React.addons.cloneWithProps(child, {
 				key: child['key'],
 				transition: this.transition()
 			});
 		});
 		return (
-			<div style={this.styles()}>
+			<div style={{...this.styles(), ...this.transition()}}>
 				<ReactTransitionGroup>{children}</ReactTransitionGroup>
 			</div>
 		);

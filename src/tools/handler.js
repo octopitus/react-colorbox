@@ -5,22 +5,18 @@ class Handler {
 
 	constructor() {
 		this.boxes = [];
-		this.initialState = { width: 320, height: 180, onLoading: false, current: null, show: false };
-		this.state = Object.create(this.initialState);
-	}
-
-	getInitialState() {
-		return this.initialState;
+		this.currentBox;
 	}
 
 	listen(callback) {
 		dispatcher.on('change', (payload) => {
-			this.state = Object.assign(this.state, payload);
+			this.currentBox = payload['current'];
 			callback(payload);
 		});
 	}
 
 	addBox(box) {
+		// Do some magic here
 		this.boxes.push(box);
 	}
 
@@ -28,6 +24,7 @@ class Handler {
 
 		box = this.boxes.find(b => b.index === box.index);
 
+		// Loading state
 		dispatcher.emit('change', { current: null, onLoading: true, show: true });
 		
 		let image;
@@ -39,16 +36,17 @@ class Handler {
 			return;
 		}
 
+		// Receive one image
 		dispatcher.emit('change', { current: box, width: image.width, height: image.height });
 	}
 
 	selectNext() {
-		let index = this.state.current.index >= this.boxes.length ? 1 : this.state.current.index + 1;
+		let index = this.currentBox.index >= this.boxes.length ? 1 : this.currentBox.index + 1;
 		this.selectBox({ index });
 	}
 
 	selectPrev() {	
-		let index = this.state.current.index > 1 ? this.state.current.index - 1 : this.boxes.length;
+		let index = this.currentBox.index > 1 ? this.currentBox.index - 1 : this.boxes.length;
 		this.selectBox({ index });
 	}
 }

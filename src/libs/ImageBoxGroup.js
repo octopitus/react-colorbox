@@ -13,7 +13,8 @@ export default class ImageBoxGroup extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = handler.getInitialState();
+		let { width, height } = props;
+		this.state = {onLoading: false, current: null, show: false, width: width || 320, height: height || 180};
 	}
 
 	componentDidMount() {
@@ -30,6 +31,7 @@ export default class ImageBoxGroup extends React.Component {
 		DOM.addEventListener("msTransitionEnd", (e) => this.handleTransitionEnd(e));
 		DOM.addEventListener("oTransitionEnd", (e) => this.handleTransitionEnd(e));
 
+		// Handle click outside the box
 		document.addEventListener('click', (e) => {
 			if(!DOM.contains(e.target) && this.state.current !== null) {
 				this.hideBox();
@@ -39,17 +41,18 @@ export default class ImageBoxGroup extends React.Component {
 
 		document.addEventListener('keydown', (e) => {
 			if (this.state.current) {
+				e.preventDefault();
 				switch (e.keyCode) {
+					// On click right button
 					case 39:
-						e.preventDefault();
 						handler.selectNext();
 						return;
+					// On click left button
 					case 37:
-						e.preventDefault();
 						handler.selectPrev();
 						return;
+					// On click ESC button
 					case 27:
-						e.preventDefault();
 						this.hideBox();
 						return;
 					default:
@@ -78,26 +81,24 @@ export default class ImageBoxGroup extends React.Component {
 	}
 
 	handleTransitionEnd(e) {
-		this.setState({onLoading: false});
+		this.setState({ onLoading: false });
 	}
 
 	hideBox() {
-		this.setState(handler.getInitialState());
+		this.setState({onLoading: false, current: null, show: false});
 	}
 
 	render() {
 		
-		let current = this.state.current;
-		let total = handler.boxes.length;
-		let options = this.props.options;
+		let currentBox = this.state.current;
 
 		return (
 			<div style={this.styles()}>
-				<ImageBoxContainer {...options}>
+				<ImageBoxContainer {...this.props.options}>
 					{ this.state.onLoading ? <this.props.ImageLoading key="loading" /> : null}
-					{ !this.state.onLoading ? <this.props.ImageBox key="box" {...current} /> : null }
+					{ !this.state.onLoading ? <this.props.ImageBox key="box" {...currentBox} /> : null }
 					{ !this.state.onLoading ? <this.props.CloseBtn key="close" onClose={() => this.hideBox()} /> : null }
-					{ options.showLabel && !this.state.onLoading ? <this.props.ImageBoxLabel key="label" {...current} total={total} /> : null }
+					{ this.props.options.showLabel && !this.state.onLoading ? <this.props.ImageBoxLabel key="label" {...currentBox} total={handler.boxes.length} /> : null }
 				</ImageBoxContainer>
 			</div>
 		);
