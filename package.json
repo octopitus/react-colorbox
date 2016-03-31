@@ -1,4 +1,5 @@
 {
+  "engine": "node 4.0.0",
   "name": "react-colorbox",
   "version": "1.0.0",
   "description": "Colorbox implemented in React",
@@ -6,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clear": "rimraf dist",
-    "build-dev": "webpack -p",
+    "build-dev": "webpack --colors",
     "listen": "webpack-dev-server --hot --quiet",
     "dev": "npm run clear && concurrent --kill-others \"npm run build-dev\" \"npm run listen\"",
     "build": "babel src --out-dir build --stage 0"
@@ -23,7 +24,8 @@
   "homepage": "https://github.com/octopitus/react-colorbox#readme",
   "dependencies": {
     "react": "^0.13.3",
-    "reactcss": "^0.3.2"
+    "reactcss": "^0.3.2",
+    "spin.js": "^2.3.2"
   },
   "devDependencies": {
     "babel": "^5.8.21",

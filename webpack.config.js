@@ -22,7 +22,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'react-colorbox': path.resolve(__dirname, './src/index.js'),
+      'react-colorbox': path.resolve(__dirname, './src'),
       'react': path.resolve(__dirname, './node_modules/react'),
       'reactcss': path.resolve(__dirname, './node_modules/reactcss')
     },
